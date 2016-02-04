@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require './siskel.rb'
+require './siskel2.rb'
 
 class TestSiskel < Minitest::Test
   def test_movie_title

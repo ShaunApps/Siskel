@@ -5,18 +5,13 @@ class Siskel
 
 
   def initialize(title, options = {} )
-    if options.nil?
-      @movie = HTTParty.get("http://www.omdbapi.com/?t=#{title}")
-    else
-      @movie = HTTParty.get("http://www.omdbapi.com/?t=#{title}&plot=full")
-    end
+    @movie = HTTParty.get("http://www.omdbapi.com/?t=#{title}&y=#{options[:year]}&plot=#{options[:plot]}")
 
 
 
     @rating = @movie['Rated']
-    @year = options
-    @plot = options
-
+    @year = @movie['Year']
+    @plot = @movie['Plot']
     @consensus = @movie['Metascore'].to_i
     if @consensus.between?(76, 100)
       @consensus = "Two Thumbs Up"
@@ -29,7 +24,6 @@ class Siskel
     end
 
 
-
     if @movie['Title'].nil?
       @title = "Movie not found!"
 
@@ -38,22 +32,5 @@ class Siskel
     end
   end
 
-###^^^^^^initialize
-
-
-
-
-  def year
-    if @year[:year].nil?
-      @year = @movie['Year']
-    else
-      @year = @year[:year].to_s
-    end
-  end
-
-
-  def plot
-    @plot = @movie['Plot']
-  end
 
 end
